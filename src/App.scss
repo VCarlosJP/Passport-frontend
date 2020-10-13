@@ -27,3 +27,21 @@ html {
   background-color: #f9f9f9;
 }
 
+.navbar-container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: left;
+  background-color:#000000;
+  border-right: 1px solid #d8dee2;;
+  width: 50px;
+  height: 100vh;
+  padding-top: 60px;
+}
+
+.button-icon{
+  margin-top: 20px;
+  margin-left: 30%;
+  font-size: 20px;
+}
+
