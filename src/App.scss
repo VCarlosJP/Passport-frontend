@@ -1,0 +1,29 @@
+@import "~react-bulma-components/src/index.sass";
+
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  align-items: center;
+  
+}
+
+#login-box{
+  background-color: #fff;
+  border: 1px solid #d8dee2;
+  border-radius: 5px;
+  height: 230px;
+  width: 310px;
+}
+
+#login-form{
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+}
+html {
+  overflow-y: hidden;
+  background-color: #f9f9f9;
+}
+
