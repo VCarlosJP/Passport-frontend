@@ -15,13 +15,18 @@ import './App.scss';
 
 function App() {
   return (
-    <Router>
+
+      <Router>
       <Switch>
-        <Route path="/" exact component={Login}></Route>
-        <Route path="/expenses" component={Expenses}></Route>
-        <Route path="/navbar" component={Navbar}></Route>
+        <div className="mainContainer">
+          <Navbar/>
+          <Route path="/" exact component={Login}></Route>
+          <Route path="/expenses" component={Expenses}></Route>
+        </div>
       </Switch>
     </Router>
+    
+   
   );
 }
 

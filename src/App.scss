@@ -28,9 +28,9 @@ html {
 }
 
 .navbar-container{
-  display: flex;
+  
   flex-direction: column;
-  min-height: 100vh;
+  
   align-items: left;
   background-color:#000000;
   border-right: 1px solid #d8dee2;;
@@ -44,6 +44,10 @@ html {
   margin-left: 30%;
   font-size: 18px;
   color: rgb(148, 148, 148);
+}
+
+.mainContainer{
+  display: flex;
 }
 
 
