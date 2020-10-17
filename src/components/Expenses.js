@@ -1,344 +1,123 @@
 import React from 'react'
 import Table from 'react-bulma-components/lib/components/table';
+import Dropdown  from 'react-bulma-components/lib/components/dropdown';
+import {  Input } from 'react-bulma-components/lib/components/form';
+import Button from 'react-bulma-components/lib/components/button';
 
+const categories = ['Bills', 'Food', 'Outside Food', 'Alcohol', 'Leisure', 'Others'];
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const years = ['2020', '2021', '2022'];
 
+export default class Expenses extends React.Component {
 
-export default function Expenses(){
+state = {
+  category: '',
+  amount: '',
+  description: '',
+  month: '',
+  year: '',
+}
+
+changeHandler = e => {
+  this.setState({ [e.target.name]: e.target.value });
+};
+
+changeCategory = (e) => {
+  this.setState({ category: e });
+};
+
+changeMonth = e => {
+  this.setState({ month: e });
+};
+
+changeYear = e => {
+  this.setState({ year: e });
+};
+
+componentWillMount() {
+  let get_date = new Date();
+  this.setState({ year: get_date.getYear()+1900, month: get_date.getMonth()+1 });
+}
+
+render(){
+  const { category, amount, description, month, year } = this.state;
     return (
             <div  className="wraper">
                 <div className="content-header">
-                    <h1 className="title is-1 content-title">Expenses</h1>
-                    <div className="content-sub-header">
-
-
+                    <div className="dimelo">
+                    <h1 className="title is-1 content-title">Operations</h1>
                         <ul className="myList">
                             <li>Expenses</li>
                             <li>Debts</li>
                             <li>Graphs</li>
                         </ul>
-                        
-                        
                     </div>
+                    <h2 className="title is-2 testing">€1,024.00</h2>
                 </div>
                 <div className="content-body">
+                  <div className="content-body-form">
+                    <div>
+                    <Dropdown id="category" style={{ marginRight: "10px" }} label="Category" value={this.state.category}  onChange={this.changeCategory}>
+                        {categories.map((category)=><Dropdown.Item key={category} value={category}>{category}</Dropdown.Item>)}
+                        
+                      </Dropdown>
+                    <Input 
+                        style={{ width:"15%", marginRight: "10px" }} 
+                        placeholder="€0.00"
+                        name="amount"
+                        value={amount}
+                        onChange={this.changeHandler}
+                    />
+                    <Input
+                        style={{ width:"40%", marginRight: "10px" }} 
+                        placeholder="Description"
+                        name="description"
+                        value={description}
+                        onChange={this.changeHandler}
+                    />
+                    <Button
+                        className="button">
+                        Add
+                    </Button>
+                    </div>
+
+                <div style={{ right:"8%", position:"absolute" }}>
+                <Dropdown label="Filter By Month" value={this.state.month}  onChange={this.changeMonth}>
+                  {months.map((month)=><Dropdown.Item key={month} value={month} onChange={this.changeHandler}>{month}</Dropdown.Item>)}
+                </Dropdown>
+                <Dropdown style={{ marginLeft: "10px" }} label="Filter By Year" value={this.state.year}  onChange={this.changeYear} >
+                  {years.map((year)=><Dropdown.Item key={year} value={year} >{year}</Dropdown.Item>)}
+                </Dropdown>
+                </div>
+                </div>
 
 
 
 
 
+                <Table className="content-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Amount</th>
+                      <th>Description</th>
+                      <th>Category</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <td>€7.50</td>
+                      <td>Domino´s</td>
+                      <td>Food</td>
+                      <th>11/10/2020</th>
+                    </tr>
+                  </tbody>
+                </Table>
 
 
-
-                <Table>
-      <thead>
-        <tr>
-          <th><abbr title="Position">Pos</abbr></th>
-          <th>Team</th>
-          <th><abbr title="Played">Pld</abbr></th>
-          <th><abbr title="Won">W</abbr></th>
-          <th><abbr title="Drawn">D</abbr></th>
-          <th><abbr title="Lost">L</abbr></th>
-          <th><abbr title="Goals for">GF</abbr></th>
-          <th><abbr title="Goals against">GA</abbr></th>
-          <th><abbr title="Goal difference">GD</abbr></th>
-          <th><abbr title="Points">Pts</abbr></th>
-          <th>Qualification or relegation</th>
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          <th><abbr title="Position">Pos</abbr></th>
-          <th>Team</th>
-          <th><abbr title="Played">Pld</abbr></th>
-          <th><abbr title="Won">W</abbr></th>
-          <th><abbr title="Drawn">D</abbr></th>
-          <th><abbr title="Lost">L</abbr></th>
-          <th><abbr title="Goals for">GF</abbr></th>
-          <th><abbr title="Goals against">GA</abbr></th>
-          <th><abbr title="Goal difference">GD</abbr></th>
-          <th><abbr title="Points">Pts</abbr></th>
-          <th>Qualification or relegation</th>
-        </tr>
-      </tfoot>
-      <tbody>
-        <tr>
-          <th>1</th>
-          <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">Leicester City</a> <strong>(C)</strong>
-          </td>
-          <td>38</td>
-          <td>23</td>
-          <td>12</td>
-          <td>3</td>
-          <td>68</td>
-          <td>36</td>
-          <td>+32</td>
-          <td>81</td>
-          <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Group_stage" title="2016–17 UEFA Champions League">Champions League group stage</a></td>
-        </tr>
-        <tr>
-          <th>2</th>
-          <td><a href="https://en.wikipedia.org/wiki/Arsenal_F.C." title="Arsenal F.C.">Arsenal</a></td>
-          <td>38</td>
-          <td>20</td>
-          <td>11</td>
-          <td>7</td>
-          <td>65</td>
-          <td>36</td>
-          <td>+29</td>
-          <td>71</td>
-          <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Group_stage" title="2016–17 UEFA Champions League">Champions League group stage</a></td>
-        </tr>
-        <tr>
-          <th>3</th>
-          <td><a href="https://en.wikipedia.org/wiki/Tottenham_Hotspur_F.C." title="Tottenham Hotspur F.C.">Tottenham Hotspur</a></td>
-          <td>38</td>
-          <td>19</td>
-          <td>13</td>
-          <td>6</td>
-          <td>69</td>
-          <td>35</td>
-          <td>+34</td>
-          <td>70</td>
-          <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Group_stage" title="2016–17 UEFA Champions League">Champions League group stage</a></td>
-        </tr>
-        <tr className="is-selected">
-          <th>4</th>
-          <td><a href="https://en.wikipedia.org/wiki/Manchester_City_F.C." title="Manchester City F.C.">Manchester City</a></td>
-          <td>38</td>
-          <td>19</td>
-          <td>9</td>
-          <td>10</td>
-          <td>71</td>
-          <td>41</td>
-          <td>+30</td>
-          <td>66</td>
-          <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Champions_League#Play-off_round" title="2016–17 UEFA Champions League">Champions League play-off round</a></td>
-        </tr>
-        <tr>
-          <th>5</th>
-          <td><a href="https://en.wikipedia.org/wiki/Manchester_United_F.C." title="Manchester United F.C.">Manchester United</a></td>
-          <td>38</td>
-          <td>19</td>
-          <td>9</td>
-          <td>10</td>
-          <td>49</td>
-          <td>35</td>
-          <td>+14</td>
-          <td>66</td>
-          <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Europa_League#Group_stage" title="2016–17 UEFA Europa League">Europa League group stage</a></td>
-        </tr>
-        <tr>
-          <th>6</th>
-          <td><a href="https://en.wikipedia.org/wiki/Southampton_F.C." title="Southampton F.C.">Southampton</a></td>
-          <td>38</td>
-          <td>18</td>
-          <td>9</td>
-          <td>11</td>
-          <td>59</td>
-          <td>41</td>
-          <td>+18</td>
-          <td>63</td>
-          <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Europa_League#Group_stage" title="2016–17 UEFA Europa League">Europa League group stage</a></td>
-        </tr>
-        <tr>
-          <th>7</th>
-          <td><a href="https://en.wikipedia.org/wiki/West_Ham_United_F.C." title="West Ham United F.C.">West Ham United</a></td>
-          <td>38</td>
-          <td>16</td>
-          <td>14</td>
-          <td>8</td>
-          <td>65</td>
-          <td>51</td>
-          <td>+14</td>
-          <td>62</td>
-          <td>Qualification for the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_UEFA_Europa_League#Third_qualifying_round" title="2016–17 UEFA Europa League">Europa League third qualifying round</a></td>
-        </tr>
-        <tr>
-          <th>8</th>
-          <td><a href="https://en.wikipedia.org/wiki/Liverpool_F.C." title="Liverpool F.C.">Liverpool</a></td>
-          <td>38</td>
-          <td>16</td>
-          <td>12</td>
-          <td>10</td>
-          <td>63</td>
-          <td>50</td>
-          <td>+13</td>
-          <td>60</td>
-          <td />
-        </tr>
-        <tr>
-          <th>9</th>
-          <td><a href="https://en.wikipedia.org/wiki/Stoke_City_F.C." title="Stoke City F.C.">Stoke City</a></td>
-          <td>38</td>
-          <td>14</td>
-          <td>9</td>
-          <td>15</td>
-          <td>41</td>
-          <td>55</td>
-          <td>−14</td>
-          <td>51</td>
-          <td />
-        </tr>
-        <tr>
-          <th>10</th>
-          <td><a href="https://en.wikipedia.org/wiki/Chelsea_F.C." title="Chelsea F.C.">Chelsea</a></td>
-          <td>38</td>
-          <td>12</td>
-          <td>14</td>
-          <td>12</td>
-          <td>59</td>
-          <td>53</td>
-          <td>+6</td>
-          <td>50</td>
-          <td />
-        </tr>
-        <tr>
-          <th>11</th>
-          <td><a href="https://en.wikipedia.org/wiki/Everton_F.C." title="Everton F.C.">Everton</a></td>
-          <td>38</td>
-          <td>11</td>
-          <td>14</td>
-          <td>13</td>
-          <td>59</td>
-          <td>55</td>
-          <td>+4</td>
-          <td>47</td>
-          <td />
-        </tr>
-        <tr>
-          <th>12</th>
-          <td><a href="https://en.wikipedia.org/wiki/Swansea_City_A.F.C." title="Swansea City A.F.C.">Swansea City</a></td>
-          <td>38</td>
-          <td>12</td>
-          <td>11</td>
-          <td>15</td>
-          <td>42</td>
-          <td>52</td>
-          <td>−10</td>
-          <td>47</td>
-          <td />
-        </tr>
-        <tr>
-          <th>13</th>
-          <td><a href="https://en.wikipedia.org/wiki/Watford_F.C." title="Watford F.C.">Watford</a></td>
-          <td>38</td>
-          <td>12</td>
-          <td>9</td>
-          <td>17</td>
-          <td>40</td>
-          <td>50</td>
-          <td>−10</td>
-          <td>45</td>
-          <td />
-        </tr>
-        <tr>
-          <th>14</th>
-          <td><a href="https://en.wikipedia.org/wiki/West_Bromwich_Albion_F.C." title="West Bromwich Albion F.C.">West Bromwich Albion</a></td>
-          <td>38</td>
-          <td>10</td>
-          <td>13</td>
-          <td>15</td>
-          <td>34</td>
-          <td>48</td>
-          <td>−14</td>
-          <td>43</td>
-          <td />
-        </tr>
-        <tr>
-          <th>15</th>
-          <td><a href="https://en.wikipedia.org/wiki/Crystal_Palace_F.C." title="Crystal Palace F.C.">Crystal Palace</a></td>
-          <td>38</td>
-          <td>11</td>
-          <td>9</td>
-          <td>18</td>
-          <td>39</td>
-          <td>51</td>
-          <td>−12</td>
-          <td>42</td>
-          <td />
-        </tr>
-        <tr>
-          <th>16</th>
-          <td><a href="https://en.wikipedia.org/wiki/A.F.C._Bournemouth" title="A.F.C. Bournemouth">AFC Bournemouth</a></td>
-          <td>38</td>
-          <td>11</td>
-          <td>9</td>
-          <td>18</td>
-          <td>45</td>
-          <td>67</td>
-          <td>−22</td>
-          <td>42</td>
-          <td />
-        </tr>
-        <tr>
-          <th>17</th>
-          <td><a href="https://en.wikipedia.org/wiki/Sunderland_A.F.C." title="Sunderland A.F.C.">Sunderland</a></td>
-          <td>38</td>
-          <td>9</td>
-          <td>12</td>
-          <td>17</td>
-          <td>48</td>
-          <td>62</td>
-          <td>−14</td>
-          <td>39</td>
-          <td />
-        </tr>
-        <tr>
-          <th>18</th>
-          <td><a href="https://en.wikipedia.org/wiki/Newcastle_United_F.C." title="Newcastle United F.C.">Newcastle United</a> <strong>(R)</strong>
-          </td>
-          <td>38</td>
-          <td>9</td>
-          <td>10</td>
-          <td>19</td>
-          <td>44</td>
-          <td>65</td>
-          <td>−21</td>
-          <td>37</td>
-          <td>Relegation to the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_Football_League_Championship" title="2016–17 Football League Championship">Football League Championship</a></td>
-        </tr>
-        <tr>
-          <th>19</th>
-          <td><a href="https://en.wikipedia.org/wiki/Norwich_City_F.C." title="Norwich City F.C.">Norwich City</a> <strong>(R)</strong>
-          </td>
-          <td>38</td>
-          <td>9</td>
-          <td>7</td>
-          <td>22</td>
-          <td>39</td>
-          <td>67</td>
-          <td>−28</td>
-          <td>34</td>
-          <td>Relegation to the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_Football_League_Championship" title="2016–17 Football League Championship">Football League Championship</a></td>
-        </tr>
-        <tr>
-          <th>20</th>
-          <td><a href="https://en.wikipedia.org/wiki/Aston_Villa_F.C." title="Aston Villa F.C.">Aston Villa</a> <strong>(R)</strong>
-          </td>
-          <td>38</td>
-          <td>3</td>
-          <td>8</td>
-          <td>27</td>
-          <td>27</td>
-          <td>76</td>
-          <td>−49</td>
-          <td>17</td>
-          <td>Relegation to the <a href="https://en.wikipedia.org/wiki/2016%E2%80%9317_Football_League_Championship" title="2016–17 Football League Championship">Football League Championship</a></td>
-        </tr>
-      </tbody>
-    </Table>
-
-
-
-
-
-
-
-
-
-
-
-
+               
 
 
 
@@ -348,3 +127,4 @@ export default function Expenses(){
     )
 }
 
+}
