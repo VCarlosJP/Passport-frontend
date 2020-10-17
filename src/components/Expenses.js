@@ -39,6 +39,24 @@ componentWillMount() {
   this.setState({ year: get_date.getYear()+1900, month: get_date.getMonth()+1 });
 }
 
+submitHandler = e => {
+  e.preventDefault();
+  alert("WORKS");
+  fetch("http://localhost:3000/addCategory", {
+    method: "POST",
+    mode: 'cors',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(this.state)
+  })
+    .then(response => console.log(response))
+
+    .catch(error => {
+      console.error("Error:", error);
+    });
+};
+
 render(){
   const { category, amount, description, month, year } = this.state;
     return (
@@ -57,72 +75,62 @@ render(){
                 <div className="content-body">
                   <div className="content-body-form">
                     <div>
-                    <Dropdown id="category" style={{ marginRight: "10px" }} label="Category" value={this.state.category}  onChange={this.changeCategory}>
-                        {categories.map((category)=><Dropdown.Item key={category} value={category}>{category}</Dropdown.Item>)}
-                        
+                    <form onSubmit={this.submitHandler}>
+                      <Dropdown id="category" style={{ marginRight: "10px" }} label="Category" value={this.state.category}  onChange={this.changeCategory}>
+                        {categories.map((category, index)=><Dropdown.Item key={category} value={category}>{category}</Dropdown.Item>)}
                       </Dropdown>
-                    <Input 
+                      <Input 
                         style={{ width:"15%", marginRight: "10px" }} 
                         placeholder="€0.00"
                         name="amount"
                         value={amount}
                         onChange={this.changeHandler}
-                    />
-                    <Input
+                      />
+                      <Input
                         style={{ width:"40%", marginRight: "10px" }} 
                         placeholder="Description"
                         name="description"
                         value={description}
                         onChange={this.changeHandler}
-                    />
-                    <Button
-                        className="button">
+                      />
+                      <Button
+                        className="button"
+                        type="Submit">
                         Add
-                    </Button>
+                      </Button>
+                    </form>
                     </div>
-
-                <div style={{ right:"8%", position:"absolute" }}>
-                <Dropdown label="Filter By Month" value={this.state.month}  onChange={this.changeMonth}>
-                  {months.map((month)=><Dropdown.Item key={month} value={month} onChange={this.changeHandler}>{month}</Dropdown.Item>)}
-                </Dropdown>
-                <Dropdown style={{ marginLeft: "10px" }} label="Filter By Year" value={this.state.year}  onChange={this.changeYear} >
-                  {years.map((year)=><Dropdown.Item key={year} value={year} >{year}</Dropdown.Item>)}
-                </Dropdown>
-                </div>
-                </div>
-
-
-
-
-
-                <Table className="content-table">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Amount</th>
-                      <th>Description</th>
-                      <th>Category</th>
-                      <th>Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th>1</th>
-                      <td>€7.50</td>
-                      <td>Domino´s</td>
-                      <td>Food</td>
-                      <th>11/10/2020</th>
-                    </tr>
-                  </tbody>
-                </Table>
-
-
-               
-
-
-
-                </div>
-            </div>
+                    <div style={{ right:"8%", position:"absolute" }}>
+                      <Dropdown label="Filter By Month" value={this.state.month}  onChange={this.changeMonth}>
+                        {months.map((month)=><Dropdown.Item key={month} value={month} onChange={this.changeHandler}>{month}</Dropdown.Item>)}
+                      </Dropdown>
+                      <Dropdown style={{ marginLeft: "10px" }} label="Filter By Year" value={this.state.year}  onChange={this.changeYear} >
+                        {years.map((year)=><Dropdown.Item key={year} value={year} >{year}</Dropdown.Item>)}
+                      </Dropdown>
+                    </div>
+                  </div>
+                      <Table className="content-table">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th>1</th>
+                            <td>€7.50</td>
+                            <td>Domino´s</td>
+                            <td>Food</td>
+                            <th>11/10/2020</th>
+                          </tr>
+                        </tbody>
+                      </Table>
+                  </div>
+              </div>
         
     )
 }
