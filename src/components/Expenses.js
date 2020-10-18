@@ -16,6 +16,7 @@ state = {
   description: '',
   month: '',
   year: '',
+  expenses:[]
 }
 
 changeHandler = e => {
@@ -37,12 +38,12 @@ changeYear = e => {
 componentWillMount() {
   let get_date = new Date();
   this.setState({ year: get_date.getYear()+1900, month: get_date.getMonth()+1 });
+  this.getExpenses();  
 }
 
 submitHandler = e => {
   e.preventDefault();
-  alert("WORKS");
-  fetch("http://localhost:3000/addCategory", {
+  fetch("http://localhost:3000/addExpense", {
     method: "POST",
     mode: 'cors',
     headers: {
@@ -50,15 +51,38 @@ submitHandler = e => {
     },
     body: JSON.stringify(this.state)
   })
-    .then(response => console.log(response))
-
+    .then(response => {
+      this.setState({ category:'', amount:'', description:'' })
+    })
     .catch(error => {
       console.error("Error:", error);
     });
 };
 
+getExpenses(){
+  fetch("http://localhost:3000/getExpenses", {
+    method: "GET"
+  })
+    .then(response => response.json())
+    .then(data => {
+      this.setState({ expenses: data });
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
+}
+
+expensesTotal(){
+  let total = 0;
+  for(const element in this.state.expenses){
+      total = total+this.state.expenses[element].amount;
+  }
+   return total;
+}
+
 render(){
-  const { category, amount, description, month, year } = this.state;
+  const { category, amount, description, month, year, expenses } = this.state;
+  const expensesTotal = this.expensesTotal()
     return (
             <div  className="wraper">
                 <div className="content-header">
@@ -120,15 +144,24 @@ render(){
                           </tr>
                         </thead>
                         <tbody>
+                        {expenses.map((expense,index)=>
                           <tr>
-                            <th>1</th>
-                            <td>€7.50</td>
-                            <td>Domino´s</td>
-                            <td>Food</td>
-                            <th>11/10/2020</th>
+                            <th>{index+1}</th>
+                            <td>{expense.amount}</td>
+                            <td>{expense.description}</td>
+                            <td>{expense.category}</td>
+                            <th>{expense.date}</th>
+                          </tr>
+                        )}
+                        <tr>
+                            <th>Total</th>
+                            <td>{expensesTotal}</td>
                           </tr>
                         </tbody>
                       </Table>
+
+        
+
                   </div>
               </div>
         
