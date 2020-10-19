@@ -4,6 +4,8 @@ import Dropdown  from 'react-bulma-components/lib/components/dropdown';
 import {  Input } from 'react-bulma-components/lib/components/form';
 import Button from 'react-bulma-components/lib/components/button';
 
+import Navbar from '../components/Navbar';
+
 const categories = ['Bills', 'Food', 'Outside Food', 'Alcohol', 'Leisure', 'Others'];
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const years = ['2020', '2021', '2022'];
@@ -53,8 +55,10 @@ submitHandler = e => {
   })
     .then(response => {
       this.setState({ category:'', amount:'', description:'' })
+      this.getExpenses();
     })
     .catch(error => {
+      alert("Error con la Solicitud...");
       console.error("Error:", error);
     });
 };
@@ -112,21 +116,7 @@ expensesTotal(){
 
 render(){
   const { category, amount, description, month, year, expenses } = this.state;
-  console.log(this.state);
-  
     return (
-            <div  className="wraper">
-                <div className="content-header">
-                    <div className="dimelo">
-                    <h1 className="title is-1 content-title">Operations</h1>
-                        <ul className="myList">
-                            <li>Expenses</li>
-                            <li>Debts</li>
-                            <li>Graphs</li>
-                        </ul>
-                    </div>
-                    <h2 className="title is-2 testing">€1,024.00</h2>
-                </div>
                 <div className="content-body">
                   <div className="content-body-form">
                     <div>
@@ -177,8 +167,6 @@ render(){
                         {this.returnTable()}
                       </Table>
                   </div>
-              </div>
-        
     )
 }
 

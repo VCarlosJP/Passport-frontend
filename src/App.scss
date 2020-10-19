@@ -28,10 +28,13 @@
  li{
   display: inline;
   margin-right: 25px;
+}
+
+.options-list .active-option{
   border-bottom: 2px solid rgb(48, 185, 36);
 }
 
-.myList{
+.options-list{
   position: absolute;
   bottom: 0;
 }

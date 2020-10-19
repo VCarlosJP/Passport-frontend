@@ -12,16 +12,7 @@ export default function Navbar(){
         <FontAwesomeIcon icon={faTasks} className="button-icon" />
     
         <FontAwesomeIcon icon={faTools} className="button-icon" />
-                
-                
-                
-                
-                
-            
-   
         </div>
-
-        
     )
 }
 
