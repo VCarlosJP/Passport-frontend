@@ -38,7 +38,7 @@ changeYear = e => {
 componentWillMount() {
   let get_date = new Date();
   this.setState({ year: get_date.getYear()+1900, month: get_date.getMonth()+1 });
-  this.getExpenses();  
+  this.getExpenses();
 }
 
 submitHandler = e => {
@@ -59,8 +59,8 @@ submitHandler = e => {
     });
 };
 
-getExpenses(){
-  fetch("http://localhost:3000/getExpenses", {
+ getExpenses(){
+   fetch("http://localhost:3000/getExpenses", {
     method: "GET"
   })
     .then(response => response.json())
@@ -80,9 +80,40 @@ expensesTotal(){
    return total;
 }
 
+ returnEmptyTable(){
+  return <tbody><tr><th>No data to show</th></tr></tbody>;
+}
+ returnFilledTable(expenses, expensesTotal){
+  return  <tbody>
+  {expenses.map((expense,index)=>
+  <tr>
+    <th>{index+1}</th>
+    <td>{expense.amount}</td>
+    <td>{expense.description}</td>
+    <td>{expense.category}</td>
+    <th>{expense.date}</th>
+  </tr>
+  )}
+  <tr>
+    <th>Total</th>
+    <td>{expensesTotal}</td>
+  </tr>
+</tbody>
+}
+
+ returnTable(){
+  if(Object.keys(this.state.expenses).length!=0)
+      return this.returnFilledTable(this.state.expenses, this.expensesTotal());
+  else
+      return this.returnEmptyTable();
+  
+    
+}
+
 render(){
   const { category, amount, description, month, year, expenses } = this.state;
-  const expensesTotal = this.expensesTotal()
+  console.log(this.state);
+  
     return (
             <div  className="wraper">
                 <div className="content-header">
@@ -143,25 +174,8 @@ render(){
                             <th>Date</th>
                           </tr>
                         </thead>
-                        <tbody>
-                        {expenses.map((expense,index)=>
-                          <tr>
-                            <th>{index+1}</th>
-                            <td>{expense.amount}</td>
-                            <td>{expense.description}</td>
-                            <td>{expense.category}</td>
-                            <th>{expense.date}</th>
-                          </tr>
-                        )}
-                        <tr>
-                            <th>Total</th>
-                            <td>{expensesTotal}</td>
-                          </tr>
-                        </tbody>
+                        {this.returnTable()}
                       </Table>
-
-        
-
                   </div>
               </div>
         
