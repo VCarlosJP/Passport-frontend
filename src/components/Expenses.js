@@ -4,9 +4,7 @@ import Dropdown  from 'react-bulma-components/lib/components/dropdown';
 import {  Input } from 'react-bulma-components/lib/components/form';
 import Button from 'react-bulma-components/lib/components/button';
 
-import Navbar from '../components/Navbar';
-
-const categories = ['Bills', 'Food', 'Outside Food', 'Alcohol', 'Leisure', 'Others'];
+const categories = ['All','Bills', 'Food', 'Outside Food', 'Alcohol', 'Leisure', 'Others'];
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const years = ['2020', '2021', '2022'];
 
@@ -16,8 +14,8 @@ state = {
   category: '',
   amount: '',
   description: '',
-  month: '',
-  year: '',
+  month: 12,
+  year: 2020,
   expenses:[]
 }
 
@@ -26,15 +24,15 @@ changeHandler = e => {
 };
 
 changeCategory = (e) => {
-  this.setState({ category: e });
+  this.setState({ category: e }, () => this.getExpenses());
 };
 
 changeMonth = e => {
-  this.setState({ month: e });
+  this.setState({ month: e }, () => this.getExpenses());
 };
 
 changeYear = e => {
-  this.setState({ year: e });
+  this.setState({ year: e }, () => this.getExpenses());
 };
 
 componentWillMount() {
@@ -64,7 +62,8 @@ submitHandler = e => {
 };
 
  getExpenses(){
-   fetch("http://localhost:3000/getExpenses", {
+   console.log(this.state.category);
+   fetch(`http://localhost:3000/getExpenses?category=${this.state.category}&month=${this.state.month}&year=${this.state.year}`, {
     method: "GET"
   })
     .then(response => response.json())
@@ -117,6 +116,7 @@ expensesTotal(){
 render(){
   const { category, amount, description, month, year, expenses } = this.state;
     return (
+      
                 <div className="content-body">
                   <div className="content-body-form">
                     <div>
@@ -146,10 +146,10 @@ render(){
                     </form>
                     </div>
                     <div style={{ right:"8%", position:"absolute" }}>
-                      <Dropdown label="Filter By Month" value={this.state.month}  onChange={this.changeMonth}>
-                        {months.map((month)=><Dropdown.Item key={month} value={month} onChange={this.changeHandler}>{month}</Dropdown.Item>)}
+                      <Dropdown value={this.state.month}  onChange={this.changeMonth}>
+                        {months.map((month, index)=><Dropdown.Item key={month} value={index+1} onChange={this.changeHandler}>{month}</Dropdown.Item>)}
                       </Dropdown>
-                      <Dropdown style={{ marginLeft: "10px" }} label="Filter By Year" value={this.state.year}  onChange={this.changeYear} >
+                      <Dropdown style={{ marginLeft: "10px" }} value={this.state.year}  onChange={this.changeYear} >
                         {years.map((year)=><Dropdown.Item key={year} value={year} >{year}</Dropdown.Item>)}
                       </Dropdown>
                     </div>

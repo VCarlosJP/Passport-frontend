@@ -10,10 +10,6 @@ import Operations from './components/Operations'
 import 'react-bulma-components/dist/react-bulma-components.min.css';
 import './App.scss';
 
-
-
-
-
 function App() {
   return (
 
@@ -25,6 +21,7 @@ function App() {
           <div  className="wraper">
           <Operations/>
           <Route path="/expenses" component={Expenses}></Route>
+ 
           </div>
           
         </div>
