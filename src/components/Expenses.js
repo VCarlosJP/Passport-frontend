@@ -141,13 +141,13 @@ export default class Expenses extends React.Component {
   }
 
   returnTable() {
-    if (Object.keys(this.state.expenses).length != 0)
+    if (Object.keys(this.state.expenses).length !== 0)
       return this.returnFilledTable(this.state.expenses, this.expensesTotal());
     else return this.returnEmptyTable();
   }
 
   render() {
-    const { category, amount, description, month, year, expenses } = this.state;
+    const { amount, description } = this.state;
     return (
       <div className="content-body">
         <div className="content-body-form">

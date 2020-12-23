@@ -15,10 +15,10 @@ export default function Navbar() {
       <Link to="/expenses">
         <FontAwesomeIcon icon={faCreditCard} className="button-icon" />
       </Link>
-      <Link to="/debts">
+      <Link to="/tasks">
         <FontAwesomeIcon icon={faTasks} className="button-icon" />
       </Link>
-      <Link to="/graphs">
+      <Link to="/settings">
         <FontAwesomeIcon icon={faTools} className="button-icon" />
       </Link>
     </div>
